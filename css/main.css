@@ -124,19 +124,26 @@ textarea {
 			max-width:20em;
 			padding:0 10px;
 			position:relative;
-			transition:position 0.2s linear;
+			top:0;
+			transition:position 0.2s linear, width 0.2s linear, padding 0.2s linear;
 		}
 		.section li {
 			color:#EEE;
 			list-style:none;
 		}
-	.hideLinks {
+	.section ul.hideLinks {
 		position:relative;
 		left:-100%;
-		display:none;
+		width:5px;
+		padding:0;
+		overflow:hidden;
+		margin:0;
 	}
+		.section ul.hideLinks li {
+			height:0;
+		}
 
-
+	
 
 
 
