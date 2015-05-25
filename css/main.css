@@ -89,12 +89,17 @@ textarea {
    ========================================================================== */
 	body {
 		background-color:#222;
+		padding:10px;
 	}
 
 	h1,h2,h3,p,a,li {
 		font-family:Helvetica;
 		color:#EEE;
 	}
+		h1 input[type="text"] {
+			background:none;
+			border-width:0 0 2px 0;
+		}
 	.block {
 		width:10em;
 		height:13em;
@@ -111,7 +116,7 @@ textarea {
 		}
 		.block h2 {
 			vertical-align:middle;
-			margin:-1em 0 0 0;
+			margin:-2em 0 0 0;
 			color:#222;
 			text-align:center;
 		}
@@ -123,7 +128,7 @@ textarea {
 		.section ul {
 			display:inline-block;
 			max-width:20em;
-			padding:0 10px;
+			padding:0 10px 0 0;
 			position:relative;
 			top:0;
 			transition:position 0.2s linear, width 0.2s linear, padding 0.2s linear;
@@ -131,7 +136,14 @@ textarea {
 		.section li {
 			color:#EEE;
 			list-style:none;
+			font-family:"Helvetica LT Std, Light",Arial,sans-serif;
+			cursor:default;
+			padding-left:10px;
 		}
+			.section li:active {
+				background-color:#FFB812;
+				text-color:#222;
+			}
 	.section ul.hideLinks {
 		position:relative;
 		left:-100%;
@@ -143,8 +155,6 @@ textarea {
 		.section ul.hideLinks li {
 			height:0;
 		}
-
-	
 
 
 
