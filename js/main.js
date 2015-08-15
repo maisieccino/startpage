@@ -16,6 +16,10 @@ $(document).keyup(function (event) {
 		if (event.which==27) {
 			$('.searchbox').blur();
 		}
+
+		if (event.which==13) {
+			window.location.href="https://duckduckgo.com/?q="+$('.searchbox').val();
+		}
 	}
 });
 
