@@ -122,6 +122,8 @@ textarea {
 		}
         .block.double {
             width:20em;
+			box-sizing:border-box;
+			padding:10px;
         }
             .block.double * { text-align:left;}
             .block.double h1 {

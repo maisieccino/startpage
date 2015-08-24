@@ -1,6 +1,6 @@
 var http = require('http');
 
-exports.GetWeather = function (apiString, callback) {
+exports.getWeather = function (apiString, callback) {
         http.get('http://api.openweathermap.org/data/2.5/weather?q='+apiString+"&APPID=b04c500ac5e3a35e61b6e005ad286923",function(response) {
         response.setEncoding('utf8');
         var weather = {};

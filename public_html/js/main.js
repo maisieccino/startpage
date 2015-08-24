@@ -38,7 +38,11 @@ $(document).keyup(function (event) {
 });
 
 $(document).ready(function() {
+	$.getScript("/socket.io/socket.io.js");
+	
 	var d = new Date();
+	var weatherUnit = "kelvin";
+
 	if (d.getHours()<12) {
 		$('.dateTime').html('Good morning! ');
 	}
@@ -53,11 +57,21 @@ $(document).ready(function() {
 				$(foo).find("ul").append("<li><a href='"+link.href+"'>"+link.name+"</a></li>");
 			});
 		})
-	//Weather
-	$('#weather div.block').html('<h1>'+data.weather.location+'</h1>');
-
+		//Weather
+		$('#weatherLoc').html(data.weather.location);
+		weatherUnit = data.weather.unit;
 	});
-	
+
+	var ws = io();
+
+	ws.on("data", function(data) {
+		console.log("data get!");
+		switch (weatherUnit) {
+			case "kelvin": $('#weatherTemp').html(data.weather.temp + " &#176;K"); break;
+			case "celcius": $('#weatherTemp').html(Math.round(data.weather.temp-273.15)+ " &#176;C"); break;
+		}
+		$('#weatherType').html(data.weather.type);
+	});	
 });
 
 
