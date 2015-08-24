@@ -1,4 +1,4 @@
-$('.section').click(function () {
+$('body').on("click","div.section",function () {
 	$(this).find("ul").toggleClass("hideLinks");
 	$('.section').not(this).find("ul").addClass("hideLinks");
 	if($(this).find("ul").hasClass("hideLinks")) {
@@ -44,17 +44,20 @@ $(document).ready(function() {
 	}
 	else $('.dateTime').html('Good afternoon! ');
 
-	$.getJSON('http://localhost:3000/config.json',function() {
-			console.log('done!');
+	$.getJSON('http://localhost:3000/config',function(data) {
+		//link blocks
+		data.linkblocks.forEach(function(linkblock) {
+			var foo = $("<div class='section' data-letter='"+linkblock.letter+"'><div class='block'><h1>"+linkblock.letter+"</h1><h2>"+linkblock.label+"</h2></div><ul class='hideLinks'></ul></div>").appendTo("body");
+
+				linkblock.links.forEach(function(link) {
+				$(foo).find("ul").append("<li><a href='"+link.href+"'>"+link.name+"</a></li>");
+			});
 		})
-		.done(function(data) {
-			//link blocks
-			console.log('sup');
-			data.linkblocks.forEach(function(linkblock) {
-				console.log(linkblock);
-				$('body').append("<div class='section' data-letter='E'>\
-					<div class='block'\
-						<h1>E</h1>");
-			})
-		});
+	//Weather
+	$('#weather div.block').html('<h1>'+data.weather.location+'</h1>');
+
+	});
+	
 });
+
+

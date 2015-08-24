@@ -134,6 +134,7 @@ textarea {
 		background-color:#666;
 		overflow:hidden;
 		display:inline-block;
+		margin-left:5px;
 	}
 		.section ul {
 			display:inline-block;
