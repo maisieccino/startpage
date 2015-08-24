@@ -44,14 +44,17 @@ $(document).ready(function() {
 	}
 	else $('.dateTime').html('Good afternoon! ');
 
-	$.getJSON('http://localhost:3000/config',function(data) {
-		//link blocks
-		console.log(JSON.stringify(data));
-		data.linkblocks.forEach(function(linkblock) {
-			console.log(linkblock);
-			$('body').append("<div class='section' data-letter='E'>\
-				<div class='block'\
-					<h1>E</h1>");
+	$.getJSON('http://localhost:3000/config.json',function() {
+			console.log('done!');
 		})
-	});
+		.done(function(data) {
+			//link blocks
+			console.log('sup');
+			data.linkblocks.forEach(function(linkblock) {
+				console.log(linkblock);
+				$('body').append("<div class='section' data-letter='E'>\
+					<div class='block'\
+						<h1>E</h1>");
+			})
+		});
 });
