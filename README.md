@@ -1,29 +1,35 @@
 # startpage
 A clean, typography-focussed start page.
 
-## Link blocks
-Link blocks are formatted as so:
+# Editing config.json
 
-```<div class="section" data-letter="E">
+`linkblocks` - an array of link blocks shown on the start screen.
 
-    <div class="block">
+`weather` - weather settings.
 
-        <h1>E</h1>
+`search` - search bar settings.
 
-        <h2>Example</h2>
 
-    </div>
+## linkblocks
+`letter` - the label assigned to the link block (the big one). Also corresponds to the key you can press to [un]select it.
 
-    <ul class="hideLinks">
+`label` - the text below the big letter.
 
-        <li><a href="https://reddit.com/r/kerbalspaceprogram">/r/KSP</a></li>
+`links` - an array of links that are exposed when the block is selected.
 
-        <li><a href="https://google.co.uk">Google</a></li>
+### links
+`name` - the label of the text.
 
-        <li><a href="https://archlinux.org/">Archlinux</a></li>
+`href` - the fully formatted uri of the link.
 
-    </ul>
+## weather
+`show` - boolean. Not yet implemented.
 
-</div>```
+`location` - a town or city you want to get weather for.
 
-The `data-letter` attribute should be matched with the value in <h1> for best results.
+`unit` - can be celcius, kelvin (default) or fahrenheit (not yet implemented)
+
+## search engine
+`name` - the name of the search engine.
+
+`searchuri` - the uri of the results page (minus the actual search query of course).
