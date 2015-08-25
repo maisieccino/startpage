@@ -23,7 +23,6 @@ exports.getSong = function(callback) {
 			exec('mpc -f %title% current',function(err,stdout,stderr) {
 				if (!err) {
 					returnData.title = stdout.toString('utf8');
-					console.log(returnData);
 					callback(returnData);
 				}
 				else {
@@ -33,7 +32,7 @@ exports.getSong = function(callback) {
 			});
 		}
 		else {
-			returnData = { "artist":"error","title":"error" }
+			returnData = { "artist":"No artist playing","title":"" }
 			callback(returnData);
 		}
 	});
