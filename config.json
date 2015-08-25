@@ -1,0 +1,61 @@
+{
+    "linkblocks":
+    [
+		{
+			"letter":"C",
+			"label": "Chrome",
+			"links":
+			[
+				{
+					"name":"Bookmarks",
+					"href":"chrome://bookmarks"
+				},
+				{
+					"name": "Extensions",
+					"href": "chrome://extensions"
+				},
+				{
+					"name": "Apps",
+					"href": "chrome://apps"
+				},
+				{
+					"name": "Settings",
+					"href": "chrome://settings"
+				}
+			]
+		},
+		{
+            "letter":"E",
+            "label": "Example",
+            "links":
+            [
+                {
+                    "name": "/r/KSP",
+                    "href": "http://reddit.com/r/kerbalspaceprogram"
+                },
+                {
+                    "name": "Google",
+                    "href": "http://google.co.uk"
+                },
+                {
+                    "name": "Archlinux",
+                    "href": "http://archlinux.org"
+                }
+            ]
+        }
+    ],
+    "weather":
+    {
+        "show": true,
+        "location": "London",
+        "unit": "celcius"
+    },
+    "search":
+    {
+        "engine":
+        {
+            "name": "DuckDuckGo",
+            "searchuri": "https://duckduckgo.com/?q="
+        }
+    }
+}
