@@ -48,7 +48,7 @@
     {
         "show": true,
         "location": "London",
-        "unit": "celcius"
+        "unit": "kelvin"
     },
     "search":
     {

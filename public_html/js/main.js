@@ -41,7 +41,7 @@ $(document).ready(function() {
 	$.getScript("/socket.io/socket.io.js");
 	
 	var d = new Date();
-	var weatherUnit = "kelvin";
+	var config = {}; 
 
 	if (d.getHours()<12) {
 		$('.dateTime').html('Good morning! ');
@@ -58,19 +58,27 @@ $(document).ready(function() {
 			});
 		})
 		//Weather
-		$('#weatherLoc').html(data.weather.location);
-		weatherUnit = data.weather.unit;
+		$('#weather').toggleClass('hidden',!data.weather.show);
+		if(data.weather.show) {
+			$('#weatherLoc').html(data.weather.location);
+			$('#weatherTemp').html("Loading...");
+			config = data;
+		}
 	});
 
 	var ws = io();
 
 	ws.on("data", function(data) {
 		console.log("data get!");
-		switch (weatherUnit) {
-			case "kelvin": $('#weatherTemp').html(data.weather.temp + " &#176;K"); break;
-			case "celcius": $('#weatherTemp').html(Math.round(data.weather.temp-273.15)+ " &#176;C"); break;
+		if(config.weather.show) {
+			switch (config.weather.unit) {
+				case "kelvin": $('#weatherTemp').html(data.weather.temp + " &#176;K"); break;
+				case "celcius": $('#weatherTemp').html(Math.round(data.weather.temp-273.15)+ " &#176;C"); break;
+				case "fahrenheit": $('#weatherTemp').html(Math.round(((data.weather.temp-273.15)*(9/5))+32)+ " &#176;F"); break;
+				default: $('#weatherTemp').html(data.weather.temp + " &#176;K"); break;
+			}
+			$('#weatherType').html(data.weather.type);
 		}
-		$('#weatherType').html(data.weather.type);
 	});	
 });
 
