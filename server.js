@@ -1,11 +1,11 @@
 var express = require('express'),
     app = express(),
     fs = require('fs'),
-    http = require('http').Server(app),
-	io = require('socket.io')(http),
     services = require('./services.js');
+	require('autoquit');
+	require('systemd');
 
-var config = fs.readFileSync(__dirname + '/config.json','utf8');
+var config = JSON.parse(fs.readFileSync(__dirname + '/config.json','utf8'));
 
 var currData = {};
 
@@ -19,23 +19,30 @@ app.get('/config',function(req,res) {
     res.send(config);
 });
 
-http.listen(3000, function() {
+var server = app.listen(3000, function() {
+	updateStuff();
+	update = setInterval(updateStuff,5000);
+});
 
-    services.getWeather("london", function(weather) {
-        console.log("weather: "+weather.type);
-        console.log(weather.description);
-        console.log("Temp: "+Math.round(weather.temp-273.15)+" celcius");
-    });
+var io = require('socket.io').listen(server);
 
-	updateStuff = setInterval(function() {
-		services.getWeather("london",function(weather) {
-			currData.weather = weather;
-		});
-	},5000);
-})
+//server.autoQuit({ timeOut: 20, exitFn: function() {
+//	console.log("ciao");
+//	io.close();
+//	server.close();
+//	process.exit(0);
+//} });
+
+var updateStuff = function() {
+	services.getWeather(config.weather.location,function(weather) {
+		currData.weather = weather;
+	});
+};
 
 io.on('connection', function(client) {
 	console.log("client connected!");
+	client.emit("data",currData);
+
 	var interval = setInterval(function() {
 		client.emit("data",currData);
 	},5000);

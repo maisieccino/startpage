@@ -70,7 +70,7 @@ $(document).ready(function() {
 
 	ws.on("data", function(data) {
 		console.log("data get!");
-		if(config.weather.show) {
+		if(config.weather.show && data!=null) {
 			switch (config.weather.unit) {
 				case "kelvin": $('#weatherTemp').html(data.weather.temp + " &#176;K"); break;
 				case "celcius": $('#weatherTemp').html(Math.round(data.weather.temp-273.15)+ " &#176;C"); break;
