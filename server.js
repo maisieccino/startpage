@@ -7,7 +7,10 @@ var express = require('express'),
 
 var config = JSON.parse(fs.readFileSync(__dirname + '/config.json','utf8'));
 
-var currData = {};
+var currData = {
+	'music': {},
+	'weather': {}
+};
 
 app.use(express.static('public_html'));
 
@@ -34,9 +37,17 @@ var io = require('socket.io').listen(server);
 //} });
 
 var updateStuff = function() {
-	services.getWeather(config.weather.location,function(weather) {
-		currData.weather = weather;
-	});
+	if(config.weather.show) {
+		services.getWeather(config.weather.location,function(weather) {
+			currData.weather = weather;
+		});
+	}
+
+	if(config.music.show) {
+		services.getSong(function(song) {
+			currData.music = song;
+		});
+	}
 };
 
 io.on('connection', function(client) {

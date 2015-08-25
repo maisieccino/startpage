@@ -57,5 +57,9 @@
             "name": "DuckDuckGo",
             "searchuri": "https://duckduckgo.com/?q="
         }
-    }
+    },
+	"music":
+	{
+		"show": true
+	}
 }

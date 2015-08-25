@@ -64,13 +64,16 @@ $(document).ready(function() {
 			$('#weatherTemp').html("Loading...");
 			config = data;
 		}
+
+		//Music
+		$('#music').toggleClass('hidden',!data.music.show);
 	});
 
 	var ws = io();
 
 	ws.on("data", function(data) {
 		console.log("data get!");
-		if(config.weather.show && data!=null) {
+		if(config.weather.show && data.weather!=null) {
 			switch (config.weather.unit) {
 				case "kelvin": $('#weatherTemp').html(data.weather.temp + " &#176;K"); break;
 				case "celcius": $('#weatherTemp').html(Math.round(data.weather.temp-273.15)+ " &#176;C"); break;
@@ -78,6 +81,11 @@ $(document).ready(function() {
 				default: $('#weatherTemp').html(data.weather.temp + " &#176;K"); break;
 			}
 			$('#weatherType').html(data.weather.type);
+		}
+
+		if(config.music.show && data.music!=null) {
+			$('#musicArtist').html(data.music.artist);
+			$('#musicTitle').html(data.music.title);
 		}
 	});	
 });

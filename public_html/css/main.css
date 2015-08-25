@@ -112,26 +112,35 @@ textarea {
 			font-size:8em;
 			margin:0;
 			text-align:center;
-			color:#222;
 		}
 		.block h2 {
 			vertical-align:middle;
 			margin:-2em 0 0 0;
-			color:#222;
 			text-align:center;
+		}
+		.block * {
+			color:#222;
 		}
         .block.double {
             width:20em;
 			box-sizing:border-box;
 			padding:10px;
         }
-            .block.double * { text-align:left;}
-            .block.double h1 {
+		.block.triple {
+			width:30em;
+			box-sizing:border-box;
+			padding:10px;
+		}
+            .block.double *, .block.triple * { text-align:left;}
+            .block.double h1,.block.triple h1 {
                 font-size:2em;
             }
-            .block.double h2 {
+            .block.double h2,.block.triple h2 {
                 margin:0;
             }
+			.block.double h3,.block.triple h3 {
+				margin:0;
+			}
 	.section {
 		background-color:#666;
 		overflow:hidden;
