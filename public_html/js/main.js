@@ -86,8 +86,29 @@ $(document).ready(function() {
 		if(config.music.show && data.music!=null) {
 			$('#musicArtist').html(data.music.artist);
 			$('#musicTitle').html(data.music.title);
-		}
-	});	
-});
+			if(data.music.isPaused) {
+				$('#btnMusicToggle i').removeClass('fa-pause');
+				$('#btnMusicToggle i').addClass('fa-play');
+			} else {
+				$('#btnMusicToggle i').removeClass('fa-play');
+				$('#btnMusicToggle i').addClass('fa-pause');
+			}
 
+			//$('#btnMusicToggle i').toggleClass('fa-pause',data.music.isPaused);
+			//$('#btnMusictoggle i').toggleClass('fa-play',!data.music.isPaused);
+		}
+	});
+
+	$('#btnMusicToggle').click(function() {
+		ws.emit('command','musicToggle');
+	});
+
+	$('#btnMusicNext').click(function() {
+		ws.emit('command','musicNext');
+	});
+
+	$('#btnMusicPrev').click(function() {
+		ws.emit('command','musicPrev');
+	});
+});
 

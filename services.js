@@ -23,16 +23,27 @@ exports.getSong = function(callback) {
 			exec('mpc -f %title% current',function(err,stdout,stderr) {
 				if (!err) {
 					returnData.title = stdout.toString('utf8');
-					callback(returnData);
+					exec('mpc',function(err,stdout,stderr) {
+						if(!err) {
+							returnData.isPaused=/[\S\s]*\n\[paused\][\S\s]*\n[\S\s]*/.test(stdout);
+							callback(returnData);
+						}
+					});
 				}
 				else {
 					returnData.title = "error";
+					returnData.isPaused=true
 					callback(returnData);
 				}
 			});
 		}
 		else {
-			returnData = { "artist":"No artist playing","title":"" }
+			returnData.artist= "Error";
+			returnData.isPaused=true;
+			switch (true) {
+				case /\/bin\/(\w)+\: mpc\: command not found/.test(stderr) : returnData.title="mpc not found"; break;
+				default: returnData.title=''; returnData.artist='No artist playing.'; break;
+			}
 			callback(returnData);
 		}
 	});

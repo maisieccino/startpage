@@ -106,6 +106,7 @@ textarea {
 		background-color:#FFB812;
 		float:left;
 		cursor:default;
+		text-align:center;
 	}
 		.block h1 {
 			vertical-align:middle;
@@ -120,6 +121,7 @@ textarea {
 		}
 		.block * {
 			color:#222;
+			text-align:center;
 		}
         .block.double {
             width:20em;
@@ -141,6 +143,10 @@ textarea {
 			.block.double h3,.block.triple h3 {
 				margin:0;
 			}
+		.block button {
+			background-color:rgba(0,0,0,0);
+			border-color:rgba(0,0,0,0);
+		}
 		.section {
 		background-color:#666;
 		overflow:hidden;

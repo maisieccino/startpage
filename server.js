@@ -1,9 +1,9 @@
 var express = require('express'),
     app = express(),
     fs = require('fs'),
+	exec = require('child_process').exec;
     services = require('./services.js');
 	require('autoquit');
-	require('systemd');
 
 var config = JSON.parse(fs.readFileSync(__dirname + '/config.json','utf8'));
 
@@ -57,4 +57,14 @@ io.on('connection', function(client) {
 	var interval = setInterval(function() {
 		client.emit("data",currData);
 	},5000);
+
+	client.on('command',function(msg) {
+		switch(msg) {
+			case 'musicToggle': exec('mpc toggle'); currData.music.isPaused=!currData.music.isPaused; break;
+			case 'musicPrev': exec('mpc prev'); break;
+			case 'musicNext': exec('mpc next'); break;
+		}
+		client.emit("data",currData);
+	});
 });
+
