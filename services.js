@@ -6,10 +6,16 @@ exports.getWeather = function (apiString, callback) {
         response.setEncoding('utf8');
         var weather = {};
         response.on("data", function(data) {
-            weather.type = JSON.parse(data).weather[0].main;
-            weather.description = JSON.parse(data).weather[0].description;
-            weather.temp = JSON.parse(data).main.temp;
-
+            try {
+				weather.type = JSON.parse(data).weather[0].main;
+    	        weather.description = JSON.parse(data).weather[0].description;
+        	    weather.temp = JSON.parse(data).main.temp;
+			}
+			catch(err) {
+				weather.type = "";
+				weather.description = "";
+				weather.temp = "";
+			}
             callback(weather);
         });
     })

@@ -39,7 +39,9 @@ var io = require('socket.io').listen(server);
 var updateStuff = function() {
 	if(config.weather.show) {
 		services.getWeather(config.weather.location,function(weather) {
-			currData.weather = weather;
+			if (weather.type!="" && weather.temp!="" && weather.description!="") {
+				currData.weather = weather;
+			}
 		});
 	}
 

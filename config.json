@@ -62,5 +62,5 @@
 	{
 		"show": true
 	},
-	"updateInterval": 500
+	"updateInterval": 1500
 }
