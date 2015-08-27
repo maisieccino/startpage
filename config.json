@@ -61,5 +61,6 @@
 	"music":
 	{
 		"show": true
-	}
+	},
+	"updateInterval": 500
 }

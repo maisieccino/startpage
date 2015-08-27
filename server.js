@@ -24,7 +24,7 @@ app.get('/config',function(req,res) {
 
 var server = app.listen(3000, function() {
 	updateStuff();
-	update = setInterval(updateStuff,5000);
+	update = setInterval(updateStuff,config.updateInterval!=null ? config.updateInterval : 5000);
 });
 
 var io = require('socket.io').listen(server);
@@ -56,7 +56,7 @@ io.on('connection', function(client) {
 
 	var interval = setInterval(function() {
 		client.emit("data",currData);
-	},5000);
+	},config.updateInterval!=null ? config.updateInterval : 5000);
 
 	client.on('command',function(msg) {
 		switch(msg) {
