@@ -66,14 +66,18 @@ $(document).ready(function() {
 		}
 
 		//Music
-		$('#music').toggleClass('hidden',!data.music.show);
+		if(data.music!=null)
+			$('#music').toggleClass('hidden',!data.music.show);
+		
+		if(data.tube!=null)
+			$('#tube').toggleClass('hidden',!data.tube.show);
 	});
 
 	var ws = io();
 
 	ws.on("data", function(data) {
 		console.log("data get!");
-		if(config.weather.show && data.weather!=null) {
+		if(config.weather!=null && config.weather.show && data.weather!=null) {
 			switch (config.weather.unit) {
 				case "kelvin": $('#weatherTemp').html(data.weather.temp + " &#176;K"); break;
 				case "celcius": $('#weatherTemp').html(Math.round(data.weather.temp-273.15)+ " &#176;C"); break;
@@ -83,7 +87,7 @@ $(document).ready(function() {
 			$('#weatherType').html(data.weather.type);
 		}
 
-		if(config.music.show && data.music!=null) {
+		if(config.music != null && config.music.show && data.music!=null) {
 			$('#musicArtist').html(data.music.artist);
 			$('#musicTitle').html(data.music.title);
 			if(data.music.isPaused) {
@@ -96,6 +100,13 @@ $(document).ready(function() {
 
 			//$('#btnMusicToggle i').toggleClass('fa-pause',data.music.isPaused);
 			//$('#btnMusictoggle i').toggleClass('fa-play',!data.music.isPaused);
+		}
+
+		if(config.tube != null && config.tube.show && data.tube!=null) {
+			$('#tube > .block > h3').html('Tube Status ('+data.tube.time+'): ');
+			data.tube.lines.forEach(function(line) {
+				$('#'+line.id+' h3').html(line.status);
+			});
 		}
 	});
 

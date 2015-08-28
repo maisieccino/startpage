@@ -14,6 +14,8 @@ var currData = {
 
 app.use(express.static('public_html'));
 
+app.use('/flexboxgrid.min.css',express.static('node_modules/flexboxgrid/dist/flexboxgrid.min.css'));
+
 app.get('/testfunc',function(req,res) {
     res.send("Oh, hai mark.");
 });
@@ -37,7 +39,7 @@ var io = require('socket.io').listen(server);
 //} });
 
 var updateStuff = function() {
-	if(config.weather.show) {
+	if(config.weather != null && config.weather.show) {
 		services.getWeather(config.weather.location,function(weather) {
 			if (weather.type!="" && weather.temp!="" && weather.description!="") {
 				currData.weather = weather;
@@ -45,9 +47,18 @@ var updateStuff = function() {
 		});
 	}
 
-	if(config.music.show) {
+	if(config.music!=null && config.music.show) {
 		services.getSong(function(song) {
 			currData.music = song;
+		});
+	}
+
+	if(config.tube!=null && config.tube.show) {
+		services.getTubeStatus(function(tubeStatus) {
+			currData.tube = {};
+			currData.tube.lines = tubeStatus;
+			var d = new Date();
+			currData.tube.time = d.getHours() + ":" + d.getMinutes();
 		});
 	}
 };

@@ -1,4 +1,5 @@
 var http = require('http'),
+	https = require('https'),
 	exec = require('child_process').exec;
 
 exports.getWeather = function (apiString, callback) {
@@ -54,3 +55,31 @@ exports.getSong = function(callback) {
 		}
 	});
 };
+
+exports.getTubeStatus = function(callback) {
+	var appId = "6910e8ea",
+		appKey = "30a6be09a6da75c18e1a33d06c53fd22",
+		apiUri = "https://api.tfl.gov.uk/Line/Mode/tube/Status?detail=false&app_id="+appId+"&app_key="+appKey;
+	https.get(apiUri,function(response) {
+		var returnData = [];
+		var data = '';
+		response.on("data",function(chunk) {
+			data += chunk;
+		});
+
+		response.on("end",function(err) {
+			JSON.parse(data).forEach(function(line) {
+				var lineData = {};
+				lineData.id = line.id;
+				lineData.status = line.lineStatuses[0].statusSeverityDescription;
+				returnData.push(lineData);
+			});
+
+			callback(returnData);
+		});
+
+		response.on("error",function(err) {
+			callback([]);
+		});
+	});
+}

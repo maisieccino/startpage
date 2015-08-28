@@ -62,5 +62,9 @@
 	{
 		"show": true
 	},
+	"tube":
+	{
+		"show": true
+	},
 	"updateInterval": 1500
 }
