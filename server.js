@@ -3,7 +3,7 @@ var express = require('express'),
     fs = require('fs'),
 	exec = require('child_process').exec;
     services = require('./services.js');
-	require('autoquit');
+//	require('autoquit');
 
 var config = JSON.parse(fs.readFileSync(__dirname + '/config.json','utf8'));
 
