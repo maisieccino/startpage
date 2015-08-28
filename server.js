@@ -24,7 +24,7 @@ app.get('/config',function(req,res) {
 
 var server = app.listen(3000, function() {
 	updateStuff();
-	#update = setInterval(updateStuff,config.updateInterval!=null ? config.updateInterval : 5000);
+	//update = setInterval(updateStuff,config.updateInterval!=null ? config.updateInterval : 5000);
 });
 
 var io = require('socket.io').listen(server);
