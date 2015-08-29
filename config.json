@@ -48,7 +48,7 @@
     {
         "show": true,
         "location": "London",
-        "unit": "celcius"
+        "unit": "kelvin"
     },
     "search":
     {
@@ -57,5 +57,14 @@
             "name": "DuckDuckGo",
             "searchuri": "https://duckduckgo.com/?q="
         }
-    }
+    },
+	"music":
+	{
+		"show": true
+	},
+	"tube":
+	{
+		"show": true
+	},
+	"updateInterval": 1500
 }

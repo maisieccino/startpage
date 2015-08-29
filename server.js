@@ -1,15 +1,20 @@
 var express = require('express'),
     app = express(),
     fs = require('fs'),
-    http = require('http').Server(app),
-	io = require('socket.io')(http),
+	exec = require('child_process').exec;
     services = require('./services.js');
+//	require('autoquit');
 
-var config = fs.readFileSync(__dirname + '/config.json','utf8');
+var config = JSON.parse(fs.readFileSync(__dirname + '/config.json','utf8'));
 
-var currData = {};
+var currData = {
+	'music': {},
+	'weather': {}
+};
 
 app.use(express.static('public_html'));
+
+app.use('/flexboxgrid.min.css',express.static('node_modules/flexboxgrid/dist/flexboxgrid.min.css'));
 
 app.get('/testfunc',function(req,res) {
     res.send("Oh, hai mark.");
@@ -19,24 +24,61 @@ app.get('/config',function(req,res) {
     res.send(config);
 });
 
-http.listen(3000, function() {
+var server = app.listen(3000, function() {
+	updateStuff();
+	//update = setInterval(updateStuff,config.updateInterval!=null ? config.updateInterval : 5000);
+});
 
-    services.getWeather("london", function(weather) {
-        console.log("weather: "+weather.type);
-        console.log(weather.description);
-        console.log("Temp: "+Math.round(weather.temp-273.15)+" celcius");
-    });
+var io = require('socket.io').listen(server);
 
-	updateStuff = setInterval(function() {
-		services.getWeather("london",function(weather) {
-			currData.weather = weather;
+//server.autoQuit({ timeOut: 20, exitFn: function() {
+//	console.log("ciao");
+//	io.close();
+//	server.close();
+//	process.exit(0);
+//} });
+
+var updateStuff = function() {
+	if(config.weather != null && config.weather.show) {
+		services.getWeather(config.weather.location,function(weather) {
+			if (weather.type!="" && weather.temp!="" && weather.description!="") {
+				currData.weather = weather;
+			}
 		});
-	},5000);
-})
+	}
+
+	if(config.music!=null && config.music.show) {
+		services.getSong(function(song) {
+			currData.music = song;
+		});
+	}
+
+	if(config.tube!=null && config.tube.show) {
+		services.getTubeStatus(function(tubeStatus) {
+			currData.tube = {};
+			currData.tube.lines = tubeStatus;
+			var d = new Date();
+			currData.tube.time = d.getHours() + ":" + d.getMinutes();
+		});
+	}
+};
 
 io.on('connection', function(client) {
 	console.log("client connected!");
+	client.emit("data",currData);
+
 	var interval = setInterval(function() {
+		updateStuff();
 		client.emit("data",currData);
-	},5000);
+	},config.updateInterval!=null ? config.updateInterval : 5000);
+
+	client.on('command',function(msg) {
+		switch(msg) {
+			case 'musicToggle': exec('mpc toggle'); currData.music.isPaused=!currData.music.isPaused; break;
+			case 'musicPrev': exec('mpc prev'); break;
+			case 'musicNext': exec('mpc next'); break;
+		}
+		client.emit("data",currData);
+	});
 });
+

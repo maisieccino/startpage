@@ -41,7 +41,7 @@ $(document).ready(function() {
 	$.getScript("/socket.io/socket.io.js");
 	
 	var d = new Date();
-	var weatherUnit = "kelvin";
+	var config = {}; 
 
 	if (d.getHours()<12) {
 		$('.dateTime').html('Good morning! ');
@@ -58,20 +58,68 @@ $(document).ready(function() {
 			});
 		})
 		//Weather
-		$('#weatherLoc').html(data.weather.location);
-		weatherUnit = data.weather.unit;
+		$('#weather').toggleClass('hidden',!data.weather.show);
+		if(data.weather.show) {
+			$('#weatherLoc').html(data.weather.location);
+			$('#weatherTemp').html("Loading...");
+			config = data;
+		}
+
+		//Music
+		if(data.music!=null)
+			$('#music').toggleClass('hidden',!data.music.show);
+		
+		if(data.tube!=null)
+			$('#tube').toggleClass('hidden',!data.tube.show);
 	});
 
 	var ws = io();
 
 	ws.on("data", function(data) {
 		console.log("data get!");
-		switch (weatherUnit) {
-			case "kelvin": $('#weatherTemp').html(data.weather.temp + " &#176;K"); break;
-			case "celcius": $('#weatherTemp').html(Math.round(data.weather.temp-273.15)+ " &#176;C"); break;
+		if(config.weather!=null && config.weather.show && data.weather!=null) {
+			switch (config.weather.unit) {
+				case "kelvin": $('#weatherTemp').html(data.weather.temp + " &#176;K"); break;
+				case "celcius": $('#weatherTemp').html(Math.round(data.weather.temp-273.15)+ " &#176;C"); break;
+				case "fahrenheit": $('#weatherTemp').html(Math.round(((data.weather.temp-273.15)*(9/5))+32)+ " &#176;F"); break;
+				default: $('#weatherTemp').html(data.weather.temp + " &#176;K"); break;
+			}
+			$('#weatherType').html(data.weather.type);
 		}
-		$('#weatherType').html(data.weather.type);
-	});	
-});
 
+		if(config.music != null && config.music.show && data.music!=null) {
+			$('#musicArtist').html(data.music.artist);
+			$('#musicTitle').html(data.music.title);
+			if(data.music.isPaused) {
+				$('#btnMusicToggle i').removeClass('fa-pause');
+				$('#btnMusicToggle i').addClass('fa-play');
+			} else {
+				$('#btnMusicToggle i').removeClass('fa-play');
+				$('#btnMusicToggle i').addClass('fa-pause');
+			}
+
+			//$('#btnMusicToggle i').toggleClass('fa-pause',data.music.isPaused);
+			//$('#btnMusictoggle i').toggleClass('fa-play',!data.music.isPaused);
+		}
+
+		if(config.tube != null && config.tube.show && data.tube!=null) {
+			$('#tube > .block > h3').html('Tube Status ('+data.tube.time+'): ');
+			data.tube.lines.forEach(function(line) {
+				$('#'+line.id+' h3').html(line.status);
+			});
+		}
+	});
+
+	$('#btnMusicToggle').click(function() {
+		ws.emit('command','musicToggle');
+	});
+
+	$('#btnMusicNext').click(function() {
+		ws.emit('command','musicNext');
+	});
+
+	$('#btnMusicPrev').click(function() {
+		ws.emit('command','musicPrev');
+	});
+});
 
