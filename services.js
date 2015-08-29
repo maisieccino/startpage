@@ -15,11 +15,16 @@ exports.getWeather = function (apiString, callback) {
 			catch(err) {
 				weather.type = "";
 				weather.description = "";
-				weather.temp = "";
+				weather.temp = "0";
 			}
             callback(weather);
         });
-    })
+    }).on("error",function(e) {
+			weather.type = "Error getting data.";
+			weather.description = "";
+			weather.temp = 0;
+			console.log("couldn't get weather data.");
+		});
 };
 
 exports.getSong = function(callback) {
