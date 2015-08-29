@@ -1,6 +1,6 @@
 {
   "name": "startpage",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A start page for your browser",
   "dependencies": {
     "express": ">= 4.13.3",

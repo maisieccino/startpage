@@ -81,5 +81,7 @@ exports.getTubeStatus = function(callback) {
 		response.on("error",function(err) {
 			callback([]);
 		});
+	}).on('error', function(e) {
+		console.log('couldn\'t update tube');
 	});
 }
