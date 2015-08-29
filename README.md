@@ -1,6 +1,8 @@
 # startpage
 A clean, typography-focussed start page.
 
+![](https://github.com/logicnotlogical/startpage/blob/master/img/example.png)
+
 ## Updating
 For release v1.2.0, you will need to do `npm install` again. Also, make sure you backup your config file. A three-way merge *may* occur if not, but this should be ok if you're reasonably confiden with git. Give me a shout if you need a hand.
 
