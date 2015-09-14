@@ -20,6 +20,7 @@ exports.getWeather = function (apiString, callback) {
             callback(weather);
         });
     }).on("error",function(e) {
+			weather = {};
 			weather.type = "Error getting data.";
 			weather.description = "";
 			weather.temp = 0;
