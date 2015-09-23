@@ -62,10 +62,11 @@ exports.getSong = function(callback) {
 	});
 };
 
+var appId = "6910e8ea",
+	appKey = "30a6be09a6da75c18e1a33d06c53fd22";
+
 exports.getTubeStatus = function(callback) {
-	var appId = "6910e8ea",
-		appKey = "30a6be09a6da75c18e1a33d06c53fd22",
-		apiUri = "https://api.tfl.gov.uk/Line/Mode/tube/Status?detail=false&app_id="+appId+"&app_key="+appKey;
+	apiUri = "https://api.tfl.gov.uk/Line/Mode/tube/Status?detail=false&app_id="+appId+"&app_key="+appKey;
 	https.get(apiUri,function(response) {
 		var returnData = [];
 		var data = '';
@@ -89,5 +90,12 @@ exports.getTubeStatus = function(callback) {
 		});
 	}).on('error', function(e) {
 		console.log('couldn\'t update tube');
+	});
+}
+
+exports.getBusStatus = function(route,callback) {
+	apiUri = "https://api.tfl.gov.uk/Line/"+route+"/Disruption?app_id="+appId+"&app_key="+appKey;
+	https.get(apiUri,function(response) {
+		var returnData = [];
 	});
 }
