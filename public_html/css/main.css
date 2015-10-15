@@ -93,7 +93,7 @@ textarea {
 	}
 
 	h1,h2,h3,p,a,li {
-		font-family:Helvetica;
+		font-family:Lato, Helvetica, Arial, sans-serif;
 		color:#EEE;
 	}
 		h1 input[type="text"] {
