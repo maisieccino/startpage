@@ -9,14 +9,14 @@
    ========================================================================== */
 
 html {
-    color: #222;
+    color: #2c3e50;
     font-size: 1em;
     line-height: 1.4;
 }
 
 /*
  * Remove text-shadow in selection highlight:
- * https://twitter.com/miketaylr/status/12228805301
+ * https://twitter.com/miketaylr/status/12c3e508805301
  *
  * These selection rule sets have to be separate.
  * Customize the background color to match your design.
@@ -88,13 +88,13 @@ textarea {
    Author's custom styles
    ========================================================================== */
 	body {
-		background-color:#222;
+		background-color:#2c3e50;
 		padding:10px;
 	}
 
 	h1,h2,h3,p,a,li {
-		font-family:Helvetica;
-		color:#EEE;
+		font-family:Lato, Helvetica, Arial, sans-serif;
+		color:#ecf0f1;
 	}
 		h1 input[type="text"] {
 			background:none;
@@ -103,7 +103,7 @@ textarea {
 	.block {
 		width:10em;
 		height:13em;
-		background-color:#FFB812;
+		background-color:#f39c12;
 		float:left;
 		cursor:default;
 		text-align:center;
@@ -116,11 +116,11 @@ textarea {
 		}
 		.block h2 {
 			vertical-align:middle;
-			margin:-2em 0 0 0;
+			margin:-1.5em 0 0 0;
 			text-align:center;
 		}
 		.block * {
-			color:#222;
+			color:#2c3e50;
 			text-align:center;
 		}
         .block.double {
@@ -171,7 +171,7 @@ textarea {
 				#victoria { background:#00a0e2; color:#fff; }
 				#waterloo-city { background:#76d0bd; color:#000; }
 		.section {
-		background-color:#666;
+		background-color:#7f8c8d;
 		overflow:hidden;
 		display:inline-block;
 		margin-left:5px;
@@ -192,8 +192,8 @@ textarea {
 			padding-left:10px;
 		}
 			.section li:active {
-				background-color:#FFB812;
-				text-color:#222;
+				background-color:#f39c12;
+				text-color:#2c3e50;
 			}
 	.section ul.hideLinks {
 		position:relative;

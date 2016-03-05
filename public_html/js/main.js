@@ -48,7 +48,7 @@ $(document).ready(function() {
 	}
 	else $('.dateTime').html('Good afternoon! ');
 
-	$.getJSON('http://localhost:3000/config',function(data) {
+	$.getJSON('/config',function(data) {
 		//link blocks
 		data.linkblocks.forEach(function(linkblock) {
 			var foo = $("<div class='section' data-letter='"+linkblock.letter+"'><div class='block'><h1>"+linkblock.letter+"</h1><h2>"+linkblock.label+"</h2></div><ul class='hideLinks'></ul></div>").appendTo("body");
