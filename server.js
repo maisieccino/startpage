@@ -74,9 +74,9 @@ io.on('connection', function(client) {
 
 	client.on('command',function(msg) {
 		switch(msg) {
-			case 'musicToggle': exec('mpc toggle'); currData.music.isPaused=!currData.music.isPaused; break;
-			case 'musicPrev': exec('mpc prev'); break;
-			case 'musicNext': exec('mpc next'); break;
+			case 'musicToggle': exec('playerctl play-pause'); currData.music.isPaused=!currData.music.isPaused; break;
+			case 'musicPrev': exec('playerctl previous'); break;
+			case 'musicNext': exec('playerctl next'); break;
 		}
 		client.emit("data",currData);
 	});
