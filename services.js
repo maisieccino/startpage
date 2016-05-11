@@ -30,15 +30,15 @@ exports.getWeather = function (apiString, callback) {
 
 exports.getSong = function(callback) {
 	var returnData = { 'artist':'', 'title':''};
-	exec('mpc -f %artist% current',function(err,stdout,stderr) {
+	exec('playerctl metadata artist',function(err,stdout,stderr) {
 		if (!err) {
 			returnData.artist =  stdout.toString('utf8');
-			exec('mpc -f %title% current',function(err,stdout,stderr) {
+			exec('playerctl metadata title',function(err,stdout,stderr) {
 				if (!err) {
 					returnData.title = stdout.toString('utf8');
-					exec('mpc',function(err,stdout,stderr) {
+					exec('playerctl status',function(err,stdout,stderr) {
 						if(!err) {
-							returnData.isPaused=/[\S\s]*\n\[paused\][\S\s]*\n[\S\s]*/.test(stdout);
+							returnData.isPaused=/[\S\s]*\n\[Paused\][\S\s]*\n[\S\s]*/.test(stdout);
 							callback(returnData);
 						}
 					});
